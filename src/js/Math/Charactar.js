@@ -1,25 +1,21 @@
 export default class Character {
-  constructor(name, type) {
-    if ((typeof name !== 'string') || (name.length < 2) || (name.length > 10)) {
+  constructor(name, type, attack, defence) {
+    if (typeof name !== 'string' || name.length < 2 || name.length > 10) {
       throw new Error('Передаются некорректные значения');
     }
 
     this.name = name;
 
-    switch (type) {
-      case 'Magician':
-        this.type = type;
-        break;
-      case 'Daemon':
-        this.type = type;
-        break;
-      default:
-        throw new Error('Передаются некорректные значения');
+    if (type === 'Magician' || type === 'Daemon') {
+      this.type = type;
+    } else {
+      throw new Error('Передаются некорректные значения');
     }
+
     this.health = 100;
     this.level = 1;
-    this.attack = 100;
-    this.defence = 40;
+    this.attack = attack;
+    this.defence = defence;
   }
 
   get stoned() {
@@ -32,20 +28,18 @@ export default class Character {
 
   get attackDistance() {
     if (this.attack <= 0) {
-      // eslint-disable-next-line no-alert
-      alert('Strength is not enough');
-      return;
+      throw new Error('Не возможно атаковать противника');
     }
+    let attack = this.attack * (1 - (this.distance - 1) / 10);
+
     if (this.stoned) {
-      this.attack -= Math.log2(this.distance) * 5;
+      attack -= Math.log2(this.distance) * 5;
     }
 
-    // eslint-disable-next-line consistent-return
-    return this.attack;
+    return Math.round(attack);
   }
 
   set attackDistance(distance) {
-    this.attack *= (1 - ((distance - 1) / 10));
     this.distance = distance;
   }
 }

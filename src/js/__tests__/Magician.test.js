@@ -8,7 +8,7 @@ test('should create Magician for type "Magician"', () => {
     type: 'Magician',
     health: 100,
     level: 1,
-    attack: 100,
-    defence: 40,
+    attack: 40,
+    defence: 20,
   });
 });

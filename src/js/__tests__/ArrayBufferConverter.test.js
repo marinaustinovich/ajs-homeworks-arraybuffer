@@ -1,4 +1,4 @@
-import getBuffer from '../ArrayBuffer/arrayBuffer';
+import getBuffer from '../ArrayBuffer/getBuffer';
 import ArrayBufferConverter from '../ArrayBuffer/ArrayBufferConverter';
 
 test('should create ArrayBufferConverter for "ArrayBuffer"', () => {
@@ -10,5 +10,7 @@ test('should create ArrayBufferConverter for "ArrayBuffer"', () => {
 test('should String "{"data":{"user":{"id":1,"name":"Hitman","level":10}}}" for "ArrayBuffer"', () => {
   const arrayBuffer = getBuffer();
   const arrayBufferConverter = new ArrayBufferConverter(arrayBuffer);
-  expect(arrayBufferConverter.toString()).toBe('{"data":{"user":{"id":1,"name":"Hitman","level":10}}}');
+  expect(arrayBufferConverter.toString()).toEqual(
+    '{"data":{"user":{"id":1,"name":"Hitman","level":10}}}',
+  );
 });
