@@ -14,7 +14,7 @@ export default class Character {
 
     this.health = 100;
     this.level = 1;
-    this.attack = attack;
+    this.baseAttack = attack;
     this.defence = defence;
   }
 
@@ -26,20 +26,17 @@ export default class Character {
     this.stonedStatus = value;
   }
 
-  get attackDistance() {
-    if (this.attack <= 0) {
-      throw new Error('Не возможно атаковать противника');
-    }
-    let attack = this.attack * (1 - (this.distance - 1) / 10);
-
-    if (this.stoned) {
-      attack -= Math.log2(this.distance) * 5;
-    }
-
-    return Math.round(attack);
+  get attack() {
+    return this.attackPower;
   }
 
-  set attackDistance(distance) {
-    this.distance = distance;
+  set attack(distance) {
+    if (this.baseAttack <= 0) {
+      throw new Error('Не возможно атаковать противника');
+    }
+    this.attackPower = this.baseAttack * (1 - (distance - 1) / 10);
+    if (this.stoned) {
+      this.attackPower -= Math.log2(distance) * 5;
+    }
   }
 }

@@ -8,17 +8,17 @@ import getBuffer from './js/ArrayBuffer/getBuffer';
 
 const daemon = new Daemon('Daemon');
 daemon.stoned = true;
-daemon.attackDistance = 2;
+daemon.attack = 2;
 
 // eslint-disable-next-line no-console
-console.log(daemon.attackDistance);
+console.log(daemon.attack);
 
 const magician = new Magician('Magician');
-magician.attackDistance = 2;
+magician.attack = 2;
 daemon.stoned = false;
 
 // eslint-disable-next-line no-console
-console.log(magician.attackDistance);
+console.log(magician.attack);
 
 // for the second task about Arrabuffer
 

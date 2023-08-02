@@ -6,14 +6,14 @@ describe('Character', () => {
     ['String', 'Magician', 120, 50],
   ])(
     'should create Character for name "%s" and type "%s"',
-    (name, type, attack, defence) => {
-      const result = new Character(name, type, attack, defence);
+    (name, type, baseAttack, defence) => {
+      const result = new Character(name, type, baseAttack, defence);
       expect(result).toEqual({
         name,
         type,
         health: 100,
         level: 1,
-        attack,
+        baseAttack,
         defence,
       });
     },
@@ -44,8 +44,8 @@ describe('Character', () => {
     (stoned, expectedAttack) => {
       const result = new Character('String', 'Daemon', 100, 40);
       result.stoned = stoned;
-      result.attackDistance = 2;
-      expect(result.attackDistance).toBe(expectedAttack);
+      result.attack = 2;
+      expect(result.attack).toBe(expectedAttack);
     },
   );
 
@@ -58,6 +58,8 @@ describe('Character', () => {
 
   test('should throw an error when attack <= 0', () => {
     const character = new Character('String', 'Daemon', 0, 40);
-    expect(() => character.attackDistance).toThrow('Не возможно атаковать противника');
+    expect(() => {
+      character.attack = 1;
+    }).toThrow('Не возможно атаковать противника');
   });
 });
