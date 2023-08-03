@@ -1,5 +1,9 @@
+export const CharacterTypes = {
+  DAEMON: 'Daemon',
+  MAGICIAN: 'Magician',
+};
 export default class Character {
-  constructor(name, type, attack, defence) {
+  constructor(name, type) {
     if (typeof name !== 'string' || name.length < 2 || name.length > 10) {
       throw new Error('Передаются некорректные значения');
     }
@@ -14,8 +18,6 @@ export default class Character {
 
     this.health = 100;
     this.level = 1;
-    this.baseAttack = attack;
-    this.defence = defence;
   }
 
   get stoned() {
@@ -26,17 +28,26 @@ export default class Character {
     this.stonedStatus = value;
   }
 
-  get attack() {
-    return this.attackPower;
+  get distance() {
+    return this.attackDistance;
   }
 
-  set attack(distance) {
-    if (this.baseAttack <= 0) {
+  set distance(value) {
+    this.attackDistance = value;
+  }
+
+  get attack() {
+    let attackPower = this.attackPower * (1 - (this.attackDistance - 1) / 10);
+    if (this.stoned) {
+      attackPower -= Math.log2(this.distance) * 5;
+    }
+    return attackPower;
+  }
+
+  set attack(value) {
+    if (value <= 0) {
       throw new Error('Не возможно атаковать противника');
     }
-    this.attackPower = this.baseAttack * (1 - (distance - 1) / 10);
-    if (this.stoned) {
-      this.attackPower -= Math.log2(distance) * 5;
-    }
+    this.attackPower = value;
   }
 }

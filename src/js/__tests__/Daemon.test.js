@@ -8,7 +8,5 @@ test('should create Daemon for name "Daemon"', () => {
     type: 'Daemon',
     health: 100,
     level: 1,
-    baseAttack: 40,
-    defence: 20,
   });
 });

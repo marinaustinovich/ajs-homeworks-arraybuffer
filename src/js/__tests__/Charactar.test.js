@@ -4,20 +4,15 @@ describe('Character', () => {
   test.each([
     ['String', 'Daemon', 100, 40],
     ['String', 'Magician', 120, 50],
-  ])(
-    'should create Character for name "%s" and type "%s"',
-    (name, type, baseAttack, defence) => {
-      const result = new Character(name, type, baseAttack, defence);
-      expect(result).toEqual({
-        name,
-        type,
-        health: 100,
-        level: 1,
-        baseAttack,
-        defence,
-      });
-    },
-  );
+  ])('should create Character for name "%s" and type "%s"', (name, type) => {
+    const result = new Character(name, type);
+    expect(result).toEqual({
+      name,
+      type,
+      health: 100,
+      level: 1,
+    });
+  });
   // Тесты для некорректных имен
   test.each([150, 'A', 'ElevenLetters'])(
     'should be Error for name "%s"',
@@ -37,29 +32,36 @@ describe('Character', () => {
 
   // Тесты для стоунда
   test.each([
-    [true, 85],
-    [false, 90],
+    [true, 2, 100, 85],
+    [false, 2, 100, 90],
   ])(
-    'should attack = %d for set/get attackDistance 2 and stoned %s',
-    (stoned, expectedAttack) => {
-      const result = new Character('String', 'Daemon', 100, 40);
+    'should distance = %d for set/get attackDistance 2 and stoned %s',
+    (stoned, distance, attack, expected) => {
+      const result = new Character('String', 'Daemon');
       result.stoned = stoned;
-      result.attack = 2;
-      expect(result.attack).toBe(expectedAttack);
+      result.distance = distance;
+      result.attack = attack;
+      expect(result.attack).toBe(expected);
     },
   );
 
   // Тесты для статуса stoned
   test.each([true, false])('should %s for set/get stoned', (stoned) => {
-    const result = new Character('String', 'Daemon', 100, 40);
+    const result = new Character('String', 'Daemon');
     result.stoned = stoned;
     expect(result.stoned).toBe(stoned);
   });
 
   test('should throw an error when attack <= 0', () => {
-    const character = new Character('String', 'Daemon', 0, 40);
+    const character = new Character('String', 'Daemon');
     expect(() => {
-      character.attack = 1;
+      character.attack = 0;
     }).toThrow('Не возможно атаковать противника');
+  });
+
+  test('should distance = 2 for set/get distance 2', () => {
+    const character = new Character('String', 'Daemon');
+    character.distance = 2;
+    expect(character.distance).toBe(2);
   });
 });
